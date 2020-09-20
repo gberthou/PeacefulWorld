@@ -13,11 +13,6 @@ class Water
     public:
         Water();
 
-        //models::Model *ToModel() const;
-#if 0
-        std::vector<struct PolyCollision> CollidesWith(const struct Parallelogram &quad) const;
-#endif
-
         std::vector<struct PolyCollision> CollidesWith(const struct Triangle &triangle) const;
         bool Contains(const struct Triangle &triangle) const;
 

@@ -31,14 +31,6 @@ namespace models
         }
     };
 
-#if 0
-    struct ModelInfo
-    {
-        std::vector<float> coordinates;
-        std::vector<SubmodelInfo> submodels;
-    };
-#endif
-
     class Submodel
     {
         public:

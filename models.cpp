@@ -88,13 +88,6 @@ static std::vector<GLuint> sphereIndices(size_t ntheta, size_t nphi)
             const size_t p2 = offset + i + nphi;
             const size_t p3 = offset + i_plus_1 + nphi;
 
-#if 0
-            glm::vec2 P0((j+1) * dtheta, i * dphi);
-            glm::vec2 P1((j+1) * dtheta, (i+1) * dphi);
-            glm::vec2 P2((j+2) * dtheta, i * dphi);
-            struct Parallelogram quad(P0, P1, P2);
-            auto collisions = discriminant(quad);
-#endif
             indices.push_back(p0);
             indices.push_back(p2);
             indices.push_back(p1);
@@ -312,8 +305,6 @@ namespace models
         std::vector<float> coordinates;
         std::vector<GLuint> indicesDirt;
         std::vector<GLuint> indicesWater;
-
-        Mesh mesh(vertices, indices);
 
         for(const auto &vertexSpheric : vertices)
         {

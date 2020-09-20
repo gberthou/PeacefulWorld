@@ -49,10 +49,6 @@ Map::Map(const std::vector<Water*> &waters):
     modelPlanet(models::Model::GeneratePlanetModel(64, 64, RADIUS, waters))
 {
     modelWaters.reserve(waters.size());
-#if 0
-    for(const auto &water : waters)
-        modelWaters.push_back(water->ToModel());
-#endif
 }
 
 Map::~Map()

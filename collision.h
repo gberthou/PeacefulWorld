@@ -185,15 +185,6 @@ struct Triangle
             }
         }
 
-#if 0
-        for(size_t i = 0; i < 4; ++i)
-        {
-            glm::vec2 vertex = other.GetPoint(i);
-            if(CollidesWith(vertex))
-                points.push_back(vertex);
-        }
-#endif
-
         return PolyCollision(points);
     }
 

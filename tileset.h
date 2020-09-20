@@ -31,27 +31,6 @@ struct Tile
     }
 };
 
-#if 0
-    std::set<Tile*> neighbors;
-
-    Tile *GetRandomNeighbor()
-    {
-        const size_t size = neighbors.size();
-        if(size == 0)
-            return nullptr;
-        size_t index = randutils::randui(0, size-1);
-        std::cout << index << " / " << neighbors.size() << std::endl;
-        size_t i = 0;
-        for(auto it : neighbors)
-        {
-            if(i++ == index)
-                return it;
-        }
-        return nullptr;
-    }
-};
-#endif
-
 typedef MultiElement<Tile> TileElement;
 
 class TileSet
