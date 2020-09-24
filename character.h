@@ -9,14 +9,16 @@ class PathFinder
     public:
         PathFinder(float theta, float phi);
 
+        void TryToReachFrom(float theta, float phi, float &newTheta, float &newPhi);
+
         float GetTheta() const;
         float GetPhi() const;
-        float DistanceTo(float theta, float phi) const;
+        bool IsReached() const;
 
     private:
         float theta;
         float phi;
-
+        bool reached;
 };
 
 class Character
