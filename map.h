@@ -2,6 +2,7 @@
 #define MAP_H
 
 #include <vector>
+#include <list>
 
 #include "models.h"
 #include "glutils.h"
@@ -26,6 +27,8 @@ struct Element
 typedef Element House;
 typedef Element Tree;
 
+typedef std::vector<Tree>::const_iterator TreeIterator;
+
 class Map
 {
     public:
@@ -34,6 +37,11 @@ class Map
         void Draw(const glutils::ProgramWorld &program);
 
         static Map *Generate();
+
+        // Assumes that treeIt is still valid!
+        void ChopTree(const TreeIterator& treeIt);
+        TreeIterator ClosestTree(float theta, float phi) const;
+        bool TreeExists(const TreeIterator &treeIt) const;
 
     private:
         Map(const std::vector<Water*> &water);

@@ -132,3 +132,34 @@ Map *Map::Generate()
     return map;
 }
 
+void Map::ChopTree(const TreeIterator &treeIt)
+{
+    trees.erase(treeIt);
+}
+
+TreeIterator Map::ClosestTree(float theta, float phi) const
+{
+    float min_angle = angle_between_points(theta, phi, trees[0].slot.theta, trees[0].slot.phi);
+    TreeIterator ret = trees.begin();
+
+    for(auto it = trees.cbegin() + 1; it != trees.cend(); ++it)
+    {
+        float angle = angle_between_points(theta, phi, it->slot.theta, it->slot.phi);
+        if(angle < min_angle)
+        {
+            min_angle = angle;
+            ret = it;
+        }
+    }
+
+    return ret;
+}
+
+bool Map::TreeExists(const TreeIterator &treeIt) const
+{
+    for(auto it = trees.cbegin(); it != trees.cend(); ++it)
+        if(it == treeIt)
+            return true;
+    return false;
+}
+

@@ -3,28 +3,13 @@
 
 #include "glutils.h"
 #include "models.h"
-
-class PathFinder
-{
-    public:
-        PathFinder(float theta, float phi);
-
-        void TryToReachFrom(float theta, float phi, float &newTheta, float &newPhi);
-
-        float GetTheta() const;
-        float GetPhi() const;
-        bool IsReached() const;
-
-    private:
-        float theta;
-        float phi;
-        bool reached;
-};
+#include "behavior.h"
+#include "map.h"
 
 class Character
 {
     public:
-        Character();
+        Character(Map &map);
 
         void Update();
         void Draw(const glutils::ProgramWorld &program);
@@ -35,7 +20,8 @@ class Character
 
         float theta;
         float phi;
-        PathFinder *pathfinder;
+        Map &map;
+        Behavior *behavior;
 
         models::Sphere model;
         models::Sphere modelGoal;

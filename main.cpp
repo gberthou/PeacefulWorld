@@ -18,6 +18,7 @@
 #include "character.h"
 #include "mathutils.h"
 
+static Map *map;
 static Character *character;
 
 static void initGL(unsigned int width, unsigned int height)
@@ -31,8 +32,6 @@ static void initGL(unsigned int width, unsigned int height)
 
 static void Draw(const glutils::ProgramWorld &program)
 {
-    static Map *map = Map::Generate();
-
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
     map->Draw(program);
@@ -60,7 +59,8 @@ int main(int argc, char *argv[])
     program.Apply();
     program.SetProj(proj);
 
-    character = new Character();
+    map = Map::Generate();
+    character = new Character(*map);
 
     while(ui.PollEvent())
     {
