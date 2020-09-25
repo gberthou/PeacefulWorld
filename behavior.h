@@ -24,7 +24,7 @@ class Behavior
 {
     public:
         Behavior();
-        virtual ~Behavior(){};
+        virtual ~Behavior();
 
         bool IsDone() const;
 
@@ -32,6 +32,18 @@ class Behavior
 
     protected:
         bool done;
+};
+
+class BehaviorIdle : public Behavior
+{
+    public:
+        BehaviorIdle();
+        virtual ~BehaviorIdle();
+
+        void Update(float &theta, float &phi);
+
+    private:
+        PathFinder pathfinder;
 };
 
 class BehaviorChopTree : public Behavior

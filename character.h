@@ -24,7 +24,7 @@ class Character
         Behavior *behavior;
 
         models::Sphere model;
-        models::Sphere modelGoal;
+        //models::Sphere modelGoal;
 };
 
 #endif

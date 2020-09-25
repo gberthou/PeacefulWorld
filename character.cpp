@@ -4,7 +4,6 @@
 #include "character.h"
 #include "glutils.h"
 #include "mathutils.h"
-#include "randutils.h"
 
 const float EPSILON = 1e-3;
 const float PLANET_RADIUS = 0.5f;
@@ -15,8 +14,8 @@ Character::Character(Map &map):
     phi(M_PI/2.),
     map(map),
     behavior(nullptr),
-    model(8, 8, {1.f, 0.f, 0.f}),
-    modelGoal(8, 8, {1.f, 1.f, 1.f})
+    model(8, 8, {1.f, 0.f, 0.f})
+    //modelGoal(8, 8, {1.f, 1.f, 1.f})
 {
 }
 
@@ -46,8 +45,6 @@ void Character::Update()
 void Character::Draw(const glutils::ProgramWorld &program)
 {
     model.Draw(program);
-    //if(pathfinder != nullptr)
-    //    modelGoal.Draw(program);
 }
 
 void Character::GetThetaAndPhi(float &t, float &p) const
@@ -58,12 +55,7 @@ void Character::GetThetaAndPhi(float &t, float &p) const
 
 void Character::newGoal()
 {
-    /*
-    pathfinder = new PathFinder(
-        randutils::randf(0.f, M_PI),
-        randutils::randf(0.f, 2.f * M_PI)
-    );
-    */
-    behavior = new BehaviorChopTree(map, theta, phi);
+    //behavior = new BehaviorChopTree(map, theta, phi);
+    behavior = new BehaviorIdle();
 }
 

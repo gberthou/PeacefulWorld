@@ -1,6 +1,7 @@
 #include <iostream>
 
 #include "behavior.h"
+#include "randutils.h"
 
 const float EPSILON = 1e-3;
 const float PLANET_RADIUS = 0.5f;
@@ -96,9 +97,33 @@ Behavior::Behavior():
 {
 }
 
+Behavior::~Behavior()
+{
+}
+
 bool Behavior::IsDone() const
 {
     return done;
+}
+
+BehaviorIdle::BehaviorIdle():
+    pathfinder(
+            randutils::randf(0.f, M_PI),
+            randutils::randf(0.f, 2.f * M_PI)
+    )
+{
+}
+
+BehaviorIdle::~BehaviorIdle()
+{
+}
+
+void BehaviorIdle::Update(float &theta, float &phi)
+{
+    if(!pathfinder.IsReached())
+        pathfinder.TryToReachFrom(theta, phi);
+    else
+        done = true;
 }
 
 BehaviorChopTree::BehaviorChopTree(Map &map, float theta, float phi):
