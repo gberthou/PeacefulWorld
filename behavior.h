@@ -60,5 +60,19 @@ class BehaviorChopTree : public Behavior
         PathFinder pathfinder;
 };
 
+class BehaviorGrowTree : public Behavior
+{
+    public:
+        BehaviorGrowTree(Map &map);
+        virtual ~BehaviorGrowTree();
+
+        void Update(float &theta, float &phi);
+
+    private:
+        Map &map;
+        SlotIterator slotIt;
+        PathFinder pathfinder;
+};
+
 #endif
 

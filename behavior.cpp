@@ -155,3 +155,31 @@ void BehaviorChopTree::Update(float &theta, float &phi)
     }
 }
 
+BehaviorGrowTree::BehaviorGrowTree(Map &map):
+    map(map),
+    slotIt(map.RandomAvailableSlot()),
+    pathfinder(slotIt->theta, slotIt->phi)
+{
+}
+
+BehaviorGrowTree::~BehaviorGrowTree()
+{
+}
+
+void BehaviorGrowTree::Update(float &theta, float &phi)
+{
+    if(!map.SlotExists(slotIt))
+    {
+        done = true;
+        return;
+    }
+
+    // 1. Move towards tree location
+    if(!pathfinder.IsReached())
+        pathfinder.TryToReachFrom(theta, phi);
+    else // 2. Grow tree
+    {
+        map.GrowTree(slotIt);
+        done = true;
+    }
+}

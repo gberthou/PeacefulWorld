@@ -10,6 +10,10 @@
 #include "water.h"
 
 const float RADIUS = 0.5f;
+const float TREE_SIZE_X = 0.025;
+const float TREE_SIZE_Y = 0.025;
+const float TREE_SIZE_Z = 0.1;
+const float Z_TREE = sqrt(RADIUS*RADIUS - TREE_SIZE_X*TREE_SIZE_X/4.);
 
 static std::vector<Slot> getSlots(float radius, float maxdim, size_t ntheta)
 {
@@ -92,11 +96,6 @@ Map *Map::Generate()
     const float maxdim = (HOUSE_SIZE_X > HOUSE_SIZE_Y ? HOUSE_SIZE_X : HOUSE_SIZE_Y);
     const size_t ntheta = 2.f * M_PI * RADIUS / maxdim;
 
-    const float TREE_SIZE_X = 0.025;
-    const float TREE_SIZE_Y = 0.025;
-    const float TREE_SIZE_Z = 0.1;
-    const float Z_TREE = sqrt(RADIUS*RADIUS - TREE_SIZE_X*TREE_SIZE_X/4.);
-
     const size_t MIN_WATERS = 1;
     const size_t MAX_WATERS = 5;
     const size_t nwaters = randutils::randui(MIN_WATERS, MAX_WATERS);
@@ -110,7 +109,8 @@ Map *Map::Generate()
     std::cout << waters.size() << " water structures" << std::endl;
     Map *map = new Map(waters);
 
-    std::vector<Slot> slots = getSlots(RADIUS, maxdim, ntheta);
+    std::vector<Slot> &slots = map->slots;
+    slots = getSlots(RADIUS, maxdim, ntheta);
 
     std::cout << slots.size() << " slots" << std::endl;
 
@@ -134,6 +134,7 @@ Map *Map::Generate()
 
 void Map::ChopTree(const TreeIterator &treeIt)
 {
+    slots.push_back(treeIt->slot);
     trees.erase(treeIt);
 }
 
@@ -159,6 +160,25 @@ bool Map::TreeExists(const TreeIterator &treeIt) const
 {
     for(auto it = trees.cbegin(); it != trees.cend(); ++it)
         if(it == treeIt)
+            return true;
+    return false;
+}
+
+void Map::GrowTree(const SlotIterator &slotIt)
+{
+    trees.emplace_back(Z_TREE, slotIt->theta, slotIt->phi, TREE_SIZE_X, TREE_SIZE_Y, TREE_SIZE_Z);
+    slots.erase(slotIt);
+}
+
+SlotIterator Map::RandomAvailableSlot(void) const
+{
+    return slots.cbegin() + randutils::randui(0, slots.size()-1);
+}
+
+bool Map::SlotExists(const SlotIterator &slotIt) const
+{
+    for(auto it = slots.cbegin(); it != slots.cend(); ++it)
+        if(it == slotIt)
             return true;
     return false;
 }

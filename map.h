@@ -28,6 +28,7 @@ typedef Element House;
 typedef Element Tree;
 
 typedef std::vector<Tree>::const_iterator TreeIterator;
+typedef std::vector<Slot>::const_iterator SlotIterator;
 
 class Map
 {
@@ -43,12 +44,18 @@ class Map
         TreeIterator ClosestTree(float theta, float phi) const;
         bool TreeExists(const TreeIterator &treeIt) const;
 
+        void GrowTree(const SlotIterator &slotIt);
+        SlotIterator RandomAvailableSlot(void) const;
+        bool SlotExists(const SlotIterator &slotIt) const;
+
     private:
         Map(const std::vector<Water*> &water);
 
         std::function<std::vector<struct PolyCollision>(const struct Parallelogram &quad)> discriminant;
+
         DebugPoint debug;
 
+        std::vector<Slot> slots;
         std::vector<House> houses;
         std::vector<Tree> trees;
         std::vector<Water*> waters;

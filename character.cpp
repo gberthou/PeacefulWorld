@@ -56,6 +56,7 @@ void Character::GetThetaAndPhi(float &t, float &p) const
 void Character::newGoal()
 {
     //behavior = new BehaviorChopTree(map, theta, phi);
-    behavior = new BehaviorIdle();
+    //behavior = new BehaviorIdle();
+    behavior = new BehaviorGrowTree(map);
 }
 
