@@ -3,6 +3,14 @@
 
 #include "map.h"
 
+enum BehaviorType_e
+{
+    BEHAVIOR_IDLE = 0,
+    BEHAVIOR_CHOP_TREE,
+    BEHAVIOR_GROW_TREE,
+    BEHAVIOR_COUNT
+};
+
 class PathFinder
 {
     public:
@@ -27,11 +35,14 @@ class Behavior
         virtual ~Behavior();
 
         bool IsDone() const;
+        bool IsSucceeded() const;
 
         virtual void Update(float &theta, float &phi) = 0;
+        virtual BehaviorType_e GetType() const = 0;
 
     protected:
         bool done;
+        bool succeeded;
 };
 
 class BehaviorIdle : public Behavior
@@ -41,6 +52,7 @@ class BehaviorIdle : public Behavior
         virtual ~BehaviorIdle();
 
         void Update(float &theta, float &phi);
+        BehaviorType_e GetType() const;
 
     private:
         PathFinder pathfinder;
@@ -53,6 +65,7 @@ class BehaviorChopTree : public Behavior
         virtual ~BehaviorChopTree();
 
         void Update(float &theta, float &phi);
+        BehaviorType_e GetType() const;
 
     private:
         Map &map;
@@ -67,6 +80,7 @@ class BehaviorGrowTree : public Behavior
         virtual ~BehaviorGrowTree();
 
         void Update(float &theta, float &phi);
+        BehaviorType_e GetType() const;
 
     private:
         Map &map;

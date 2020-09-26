@@ -5,6 +5,7 @@
 #include "models.h"
 #include "behavior.h"
 #include "map.h"
+#include "personality.h"
 
 class Character
 {
@@ -21,6 +22,7 @@ class Character
         float theta;
         float phi;
         Map &map;
+        Personality personality;
         Behavior *behavior;
 
         models::Sphere model;

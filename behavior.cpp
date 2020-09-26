@@ -93,7 +93,8 @@ bool PathFinder::IsReached() const
 //
 
 Behavior::Behavior():
-    done(false)
+    done(false),
+    succeeded(false)
 {
 }
 
@@ -104,6 +105,11 @@ Behavior::~Behavior()
 bool Behavior::IsDone() const
 {
     return done;
+}
+
+bool Behavior::IsSucceeded() const
+{
+    return succeeded;
 }
 
 BehaviorIdle::BehaviorIdle():
@@ -123,7 +129,15 @@ void BehaviorIdle::Update(float &theta, float &phi)
     if(!pathfinder.IsReached())
         pathfinder.TryToReachFrom(theta, phi);
     else
+    {
         done = true;
+        succeeded = true;
+    }
+}
+
+BehaviorType_e BehaviorIdle::GetType() const
+{
+    return BEHAVIOR_IDLE;
 }
 
 BehaviorChopTree::BehaviorChopTree(Map &map, float theta, float phi):
@@ -152,7 +166,13 @@ void BehaviorChopTree::Update(float &theta, float &phi)
     {
         map.ChopTree(treeIt);
         done = true;
+        succeeded = true;
     }
+}
+
+BehaviorType_e BehaviorChopTree::GetType() const
+{
+    return BEHAVIOR_CHOP_TREE;
 }
 
 BehaviorGrowTree::BehaviorGrowTree(Map &map):
@@ -160,6 +180,11 @@ BehaviorGrowTree::BehaviorGrowTree(Map &map):
     slotIt(map.RandomAvailableSlot()),
     pathfinder(slotIt->theta, slotIt->phi)
 {
+}
+
+BehaviorType_e BehaviorGrowTree::GetType() const
+{
+    return BEHAVIOR_GROW_TREE;
 }
 
 BehaviorGrowTree::~BehaviorGrowTree()
@@ -181,5 +206,6 @@ void BehaviorGrowTree::Update(float &theta, float &phi)
     {
         map.GrowTree(slotIt);
         done = true;
+        succeeded = true;
     }
 }
