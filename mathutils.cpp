@@ -1,3 +1,5 @@
+#include <algorithm>
+
 #include "mathutils.h"
 
 glm::vec3 spheric(float theta, float phi, float radius)
@@ -60,7 +62,7 @@ float angle_between_points(float thetaA, float phiA, float thetaB, float phiB)
     const float cthetab = cos(thetaB);
     const float sthetab = sin(thetaB);
     const float cdphi   = cos(phiA - phiB); // TODO: check dphi == phiA - phiB
-    const float OA_dot_OB_div_R2 = sthetaa * sthetab * cdphi + cthetaa * cthetab;
+    const float OA_dot_OB_div_R2 = std::clamp(sthetaa * sthetab * cdphi + cthetaa * cthetab, -1.f, 1.f);
 
     // 2. alpha = acos( OA.dot(OB) / R2 )
     return acos(OA_dot_OB_div_R2);

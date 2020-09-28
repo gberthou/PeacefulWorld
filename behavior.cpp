@@ -58,20 +58,31 @@ void PathFinder::TryToReachFrom(float &t, float &p)
             if(sphic < 0.f)
                 phic = 2.f * M_PI - phic;
 
-            t = thetac;
-            p = phic;
-
-            if(std::isnan(t) || std::isnan(p))
+            if(std::isnan(thetac) || std::isnan(phic))
             {
+                std::cout << " alpha = " << alpha << std::endl
+                          << "calpha = " << calpha << std::endl
+                          << "salpha = " << salpha << std::endl;
+                std::cout << "cthetac = " << cthetac << std::endl
+                          << "sthetac = " << sthetac << std::endl;
                 std::cout << "cphic = " << cphic << std::endl
                           << "sphic = " << sphic << std::endl;
-                std::cout << "T: " << theta << " -> " << theta << std::endl;
-                std::cout << "P: " << phi << " -> " << phi << std::endl;
+                std::cout << "T: " << t << " -> " << theta << std::endl;
+                std::cout << "P: " << p << " -> " << phi << std::endl;
                 std::cout << "alpha  = " << alpha << std::endl;
                 std::cout << std::endl;
                 std::exit(0);
             }
+
+            t = thetac;
+            p = phic;
         }
+    }
+
+    if(reached)
+    {
+        t = theta;
+        p = phi;
     }
 }
 
